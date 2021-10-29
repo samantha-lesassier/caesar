@@ -1,0 +1,69 @@
+package com.company;
+import java.lang.Math;
+import java.security.InvalidParameterException;
+import java.util.Scanner;
+
+
+public class caesar {
+    public static void main(String[] args) throws InvalidParameterException {
+
+        char key1 = args[0].charAt(0);
+        int key = Integer.parseInt(args[0]);
+
+        int test = 0;
+
+        if (args.length != 1 | key < 0) {
+            Exception param = new Exception("Enter a number between 1 - 26 inclusive");
+            System.out.println(param);
+            test += 1;
+            System.out.println(1);
+        }
+
+        if (Character.isDigit(key1) == false) {
+            System.out.println("Usage: ./caesar key");
+            test += 1;
+            System.out.println(1);
+        }
+
+
+        if (test == 0) {
+            Scanner keyboard = new Scanner(System.in);
+            System.out.print("plaintext: ");
+            String text = keyboard.nextLine();
+            int length = text.length();
+            String final_result = "";
+
+            for (int i = 0; i < length; i++) {
+                int temp_char = text.charAt(i);
+                if (Character.isLowerCase(text.charAt(i))) {
+                    if ((temp_char + key) <= 122) {
+                        temp_char += key;
+                        temp_char = (char) temp_char;
+                        final_result += (char) temp_char;
+                    } else if ((temp_char + key) > 122){
+                        int final_char_num = Math.abs((Math.abs(temp_char - 122) - key)) + 96;
+                        final_result += (char) final_char_num;
+                    }
+                }
+
+                if (Character.isUpperCase(text.charAt(i))) {
+                    if ((temp_char + key) <= 90) {
+                        temp_char += key;
+                        temp_char = (char) temp_char;
+                        final_result += (char) temp_char;
+                    } else {
+                        int final_char_num = Math.abs((Math.abs(temp_char - 90) - key)) + 64;
+                        final_result += (char) final_char_num;
+                    }
+                }
+
+                boolean final_test = Character.isLetter((char) temp_char);
+                if (final_test == false) {
+                    final_result += (char) temp_char;
+                }
+            }
+            System.out.print("ciphertext: ");
+            System.out.println(final_result);
+        }
+    }
+}
